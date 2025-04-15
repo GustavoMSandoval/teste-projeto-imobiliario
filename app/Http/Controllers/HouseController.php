@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\House;
+use App\Models\HouseAddress;
 use Illuminate\Http\Request;
 
 class HouseController extends Controller
@@ -19,6 +20,14 @@ class HouseController extends Controller
         // Save house
         $house = House::create(['name' => $request->name, 'description' => $request->description]);
 
+        $houseAdress = HouseAddress::create([
+            'cep' => $request->cep, 
+            'rua' => $request->rua, 
+            'bairro' => $request->bairro,
+            'cidade' => $request->cidade,
+            'estado' => $request->estado,
+            'house_id' => $house->id
+        ]);
         // Save images
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {

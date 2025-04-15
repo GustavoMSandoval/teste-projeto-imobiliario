@@ -15,4 +15,8 @@ class House extends Model
     {
         return $this->hasMany(HouseImage::class);
     }
+
+    public function address() {
+        return $this->hasOne(HouseAddress::class);
+    }
 }

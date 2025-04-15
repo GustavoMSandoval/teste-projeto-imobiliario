@@ -1,4 +1,4 @@
-export function addFileInput() {
+function addFileInput() {
 
     const inputsContainer = document.getElementById('file-inputs');
 
