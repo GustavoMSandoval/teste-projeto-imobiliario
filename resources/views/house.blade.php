@@ -34,7 +34,24 @@
                 <p>Cidade: {{ $house->address->cidade }}</p>
                 <p>Estado: {{ $house->address->estado }}</p>
             </div>
+            <div id="map"></div>
     </div>
 </div>
+<style>
+    #map {
+    height: 600px; /* The height is 400 pixels */
+    width: 100%; /* The width is the width of the web page */
+    }
+</style>
 
+
+
+<script>
+    window.houseData = {
+        lat: {{ $houseCoordinates['lat'] }},
+        lng: {{ $houseCoordinates['lng'] }},
+        title: @json($house->name)
+    };
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDECHSY6CV7yXTA3e-coT49Ub8G9yZrIyw"></script>
 @endsection
