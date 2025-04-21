@@ -53,5 +53,5 @@
         title: @json($house->name)
     };
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDECHSY6CV7yXTA3e-coT49Ub8G9yZrIyw"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key="></script>
 @endsection
