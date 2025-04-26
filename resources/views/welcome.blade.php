@@ -3,7 +3,7 @@
     @section('content')
         
     <div class="container">
-        <form  action="{{ route('house.store') }}" method="POST" enctype="multipart/form-data">
+        <form x-target="house-list" action="{{ route('house.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <label class="form-label">De um título a sua casa:</label>
             <input class="form-control" type="text" name="name" required>
@@ -26,15 +26,23 @@
                 <textarea class="form-control" name="description" id="description" cols="30" rows="10" required></textarea>
                 
                 <label class="form-label">Imagens Casa:</label>
-                <div id="file-inputs" class="mt-2">
-                    <div class="d-flex gap-1">
-                        <input class="form-control" type="file" name="images[]" multiple required accept="'image/*">
-                        <button class="btn btn-dark" type="button" onclick="addFileInput()">+</button>
+                    <div x-data class="d-flex gap-1 mt-2">
+                        <input 
+                        x-ref="imageInput"
+                        id="image-input" 
+                        class="form-control" 
+                        type="file" 
+                        name="images[]" 
+                        multiple required accept="'image/*">
+                        <button 
+                        class="btn btn-dark" 
+                        type="button" 
+                        @click="$refs.imageInput.click()">+</button>
                     </div>
-                </div><br><br>
+                <br><br>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>
-            <div class="mt-5 d-flex flex-wrap gap-4">
+            <div id="house-list" class="mt-5 d-flex flex-wrap gap-4">
                 @foreach($houses as $house)
                 <div class="card" style="width: 18rem;">
                     @if($house->images->count())
