@@ -2,7 +2,7 @@
     
 @section('content')
     
-<div class="container">
+<div class="container mb-4">
     <div class="card">
         @if($house->images->count())
         <div id="carousel-{{ $house->id }}" class="carousel slide" data-bs-ride="carousel">
@@ -43,19 +43,32 @@
 </div>
 <style>
     #map {
-    height: 600px; /* The height is 400 pixels */
-    width: 100%; /* The width is the width of the web page */
+        height: 400px; /* Adjust map size */
+        width: 100%;  /* Full width */
+        border-radius: 0.5rem; /* Rounded corners */
+        overflow: hidden; /* Prevent overflow */
     }
 </style>
 
-
-
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <script>
-    window.houseData = {
-        lat: {{ $houseCoordinates['lat'] }},
-        lng: {{ $houseCoordinates['lng'] }},
-        title: @json($house->name)
-    };
+    var map = L.map('map').setView(
+        [{{ $houseCoordinates['lat'] }}, {{ $houseCoordinates['lng'] }}],
+        15
+    );
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 20,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.marker([{{ $houseCoordinates['lat'] }}, {{ $houseCoordinates['lng'] }}]).addTo(map)
+        .bindPopup('<b>{{ $house->name }}</b>')
+        .openPopup();
+    
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 200);
+
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDECHSY6CV7yXTA3e-coT49Ub8G9yZrIyw"></script>
 @endsection
