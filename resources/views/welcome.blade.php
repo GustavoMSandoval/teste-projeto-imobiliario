@@ -42,36 +42,40 @@
                 <br><br>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>
-            <div id="house-list" class="mt-5 d-flex flex-wrap gap-4">
+            <div id="house-list" class="my-5 d-flex flex-wrap gap-4">
                 @foreach($houses as $house)
                 <div class="card" style="width: 18rem;">
                     @if($house->images->count())
                     <div id="carousel-{{ $house->id }}" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                        @foreach($house->images as $index => $image)
-                                            <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                                <img src="{{ asset('storage/' . $image->image_path) }}" class="d-block w-100" alt="House image">
-                                            </div>
-                                            @endforeach
-                                        </div>
-                                        @if($house->images->count() > 1)
-                                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ $house->id }}" data-bs-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Previous</span>
-                                        </button>
-                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ $house->id }}" data-bs-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Next</span>
-                                        </button>
-                                    @endif
+                        <div class="carousel-inner" style="height: 200px; overflow: hidden;">
+                            @foreach($house->images as $index => $image)
+                                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                    <img src="{{ asset('storage/' . $image->image_path) }}" 
+                                         class="d-block w-100 h-100" 
+                                         style="object-fit: cover;" 
+                                         alt="House image">
                                 </div>
-                            @endif
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $house->name }}</h5>
-                                <p class="card-text">{{ $house->description }}</p>
-                                <a href="{{ route('house.show', $house->id) }}" class="stretched-link"></a>
-                            </div>
+                            @endforeach
                         </div>
+                
+                        @if($house->images->count() > 1)
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ $house->id }}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ $house->id }}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        @endif
+                    </div>
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $house->name }}</h5>
+                        <p class="card-text">{{ Str::limit($house->description, 70) }}</p>
+                        <a href="{{ route('house.show', $house->id) }}" class="stretched-link"></a>
+                    </div>
+                </div>                
                 @endforeach
             </div>            
         </div>
